@@ -68,7 +68,7 @@ export default function Navbar() {
             <Button
               variant="secondary"
               size="sm"
-              onClick={() => scrollToSection("pricing")}
+              onClick={() => (window.location.href = "/pages/login")}
             >
               Get Started
             </Button>
@@ -123,7 +123,7 @@ export default function Navbar() {
                 variant="secondary"
                 size="sm"
                 className="w-full"
-                onClick={() => scrollToSection("pricing")}
+                onClick={() => (window.location.href = "/pages/login")}
               >
                 Get Started
               </Button>

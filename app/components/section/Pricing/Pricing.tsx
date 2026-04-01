@@ -3,56 +3,63 @@ import { Button, StatusPill } from "../../ui";
 
 const plans = [
   {
-    name: "Setup & Onboarding",
-    subtitle: "One-time Setup",
+    name: "Setup & Go",
+    subtitle: "Starter",
+    tagline: "You own it, I'll build it",
     price: "$299",
     period: "one-time",
-    bestFor: "Beginners / creators",
+    periodNote: "No recurring fee — it's yours forever",
+    bestFor: "freelancers & budget-conscious teams",
     features: [
-      "Account setup",
-      "Connecting platforms",
-      "Initial configuration",
+      "I set up n8n on your own account",
+      "Connect your social platforms (Facebook, LinkedIn, etc.)",
+      "AI caption automation workflow",
+      "Initial testing & handover walkthrough",
+      "You manage & maintain after setup",
     ],
-    cta: "Get Starter",
+    cta: "Get started",
     maintenanceNote:
       "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
     highlighted: false,
   },
   {
-    name: "Pro Plan",
-    subtitle: "Most Popular",
-    price: "$49",
+    name: "Done for You",
+    subtitle: "Managed",
+    tagline: "I run it all — you just post",
+    price: "$599",
     period: "/month",
-    bestFor: "Creators + small businesses",
+    periodNote: "+ $99 one-time setup fee",
+    bestFor: "social media managers & small businesses",
     features: [
-      "Multiple platforms (all platforms)",
-      "AI caption generation",
-      "Hybrid mode",
-      "Hosted automation system (no need for your own n8n)",
-      "We handle setup, maintenance, and updates",
-      "You focus on posting — we handle the rest",
+      "I host & run n8n for you",
+      "All platforms connected & maintained",
+      "AI writes captions — edit before posting",
+      "I handle updates, fixes & API renewals",
+      "Priority support via chat",
+      "Cancel anytime",
     ],
-    cta: "Start Pro",
+    cta: "Get started",
     maintenanceNote:
       "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
     highlighted: true,
   },
   {
-    name: "Growth Plan",
-    subtitle: "Done For You",
-    price: "$399",
+    name: "Growth & Scale",
+    subtitle: "Agency",
+    tagline: "Full power, multiple brands",
+    price: "$1,499",
     period: "/month",
-    bestFor: "Power users",
+    periodNote: "+ $99 one-time setup fee",
+    bestFor: "agencies managing multiple clients",
     features: [
-      "Everything in Pro",
-      "Full maintenance included",
-      "More platforms",
-      "Faster processing",
-      "Better AI outputs",
-      "Early features",
-      "You don't do anything anymore - we handle everything",
+      "Everything in Done for You",
+      "Multiple brand/client accounts",
+      "Faster processing & better AI outputs",
+      "Expanded platform support",
+      "Early access to new features",
+      "Dedicated support & monthly check-in",
     ],
-    cta: "Choose Growth",
+    cta: "Book a call",
     maintenanceNote: "",
     highlighted: false,
   },
@@ -98,23 +105,38 @@ export default function Pricing() {
                 <p className="text-xs uppercase tracking-wider text-primary font-semibold mb-2">
                   {plan.subtitle}
                 </p>
-                <h3 className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-secondary">
+                <h3 className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-secondary mb-1">
                   {plan.name}
                 </h3>
-                <p className="mt-3 text-text text-sm font-[family-name:var(--font-poppins)]">
-                  Best for:{" "}
-                  <span className="text-secondary font-medium">
-                    {plan.bestFor}
-                  </span>
-                </p>
+                {plan.tagline && (
+                  <p className="text-sm text-text font-[family-name:var(--font-poppins)] font-light mb-3">
+                    {plan.tagline}
+                  </p>
+                )}
               </div>
 
               <div className="mb-6 border-y border-gray-100 py-5">
-                <span className="font-[family-name:var(--font-spline-sans)] text-4xl font-bold text-secondary">
-                  {plan.price}
-                </span>
-                <span className="text-text ml-1">{plan.period}</span>
+                <div>
+                  <span className="font-[family-name:var(--font-spline-sans)] text-4xl font-bold text-secondary">
+                    {plan.price}
+                  </span>
+                  <span className="text-text text-base ml-1">
+                    {plan.period}
+                  </span>
+                </div>
+                {plan.periodNote && (
+                  <p className="text-xs text-text/70 mt-1 font-[family-name:var(--font-poppins)]">
+                    {plan.periodNote}
+                  </p>
+                )}
               </div>
+
+              <p className="text-xs text-text mb-4 font-[family-name:var(--font-poppins)]">
+                Best for{" "}
+                <span className="text-secondary font-medium">
+                  {plan.bestFor}
+                </span>
+              </p>
 
               <ul className="space-y-3 mb-7">
                 {plan.features.map((feature) => (
@@ -144,7 +166,7 @@ export default function Pricing() {
         </div>
 
         <p className="mt-6 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-700 font-[family-name:var(--font-poppins)]">
-          Note: Starter and Pro plans have an additional maintenance fee for API
+          Note: Setup & Go plans have an additional maintenance fee for API
           token renewal, node fixes, and minor tweaks. Cancel anytime for
           monthly plans.
         </p>

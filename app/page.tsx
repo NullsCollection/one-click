@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import { Hero } from "./components/section/Hero";
+import { VideoDemo } from "./components/section/VideoDemo";
 import { ProofBar } from "./components/section/ProofBar";
 import { Problem } from "./components/section/Problem";
 import { BeforeAfter } from "./components/section/BeforeAfter";
@@ -17,6 +18,7 @@ export default function Home() {
     <div id="top" className="min-h-screen bg-white">
       <Navbar />
       <Hero />
+      <VideoDemo />
       <ProofBar />
       <Problem />
       <BeforeAfter />

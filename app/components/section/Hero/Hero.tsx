@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative pt-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute top-0 right-[-200px] w-[700px] h-[700px] bg-gradient-radial from-primary/8 to-transparent pointer-events-none" />
 
@@ -35,7 +35,12 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4 mb-12">
-              <Button variant="secondary" size="lg" className="shadow-lg">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="shadow-lg"
+                onClick={() => (window.location.href = "/pages/login")}
+              >
                 Start Posting Now
                 <ArrowRight size={18} />
               </Button>
@@ -62,7 +67,7 @@ export default function Hero() {
               </div>
               <span className="font-[family-name:var(--font-poppins)]">
                 Trusted by{" "}
-                <strong className="font-semibold text-secondary">500+</strong>{" "}
+                <strong className="font-semibold text-secondary">50+</strong>{" "}
                 creators already saving hours
               </span>
             </div>
