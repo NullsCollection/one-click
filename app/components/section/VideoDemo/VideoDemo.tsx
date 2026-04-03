@@ -5,7 +5,7 @@ export default function VideoDemo() {
   return (
     <section id="demo" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        {/* <div className="text-center mb-10">
+        <div className="text-center mb-10">
           <StatusPill
             className="mb-3 uppercase tracking-wider flex w-fit mx-auto"
             showIndicator={false}
@@ -19,7 +19,7 @@ export default function VideoDemo() {
             A quick walkthrough of the full flow: Upload, choose caption mode,
             and publish across platforms.
           </p>
-        </div> */}
+        </div>
 
         <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-slate-900 via-secondary to-slate-800 p-2 shadow-[0_18px_40px_rgba(31,43,72,0.25)]">
           <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs text-white backdrop-blur-sm">
@@ -27,7 +27,7 @@ export default function VideoDemo() {
             90-sec walkthrough
           </div>
 
-          <div className="absolute top-4 right-4 inline-flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 px-3 py-1 text-xs text-primary-foreground text-white backdrop-blur-sm">
+          <div className="absolute top-4 right-4 inline-flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 px-3 py-1 text-xs text-white backdrop-blur-sm">
             <Sparkles className="h-3.5 w-3.5" />
             SaaS Workflow Demo
           </div>

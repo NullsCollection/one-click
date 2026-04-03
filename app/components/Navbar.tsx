@@ -1,11 +1,27 @@
 "use client";
 
-import { useState, type MouseEvent } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { useState, useRef, useEffect, type MouseEvent } from "react";
+import { useRouter } from "next/navigation";
+import { Menu, X, ArrowRight, LogOut, ChevronDown } from "lucide-react";
 import { Button } from "./ui";
+import { useAuth } from "@/app/context/AuthContext";
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
 
 export default function Navbar() {
+  const { user, loading, logout } = useAuth();
+  const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const scrollToSection = (id: string) => {
@@ -19,6 +35,27 @@ export default function Navbar() {
   ) => {
     event.preventDefault();
     scrollToSection(id);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: globalThis.MouseEvent) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target as Node)
+      ) {
+        setIsProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    setIsProfileOpen(false);
+    setIsMenuOpen(false);
+    await logout();
+    router.push("/");
   };
 
   return (
@@ -57,21 +94,73 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Desktop CTA Buttons */}
+          {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={() => scrollToSection("pricing")}
-              className="text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
-            >
-              Book a demo
-            </button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => (window.location.href = "/pages/login")}
-            >
-              Get Started
-            </Button>
+            {!loading && !user && (
+              <>
+                <button
+                  onClick={() => scrollToSection("pricing")}
+                  className="text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Book a demo
+                </button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => router.push("/pages/login")}
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
+
+            {!loading && user && (
+              <div className="relative" ref={profileRef}>
+                <button
+                  onClick={() => setIsProfileOpen((o) => !o)}
+                  className="flex items-center gap-2 rounded-xl px-3 py-1.5 hover:bg-gray-50 transition-colors"
+                >
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full object-cover shrink-0"
+                    />
+                  ) : (
+                    <span className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold font-[family-name:var(--font-poppins)] shrink-0">
+                      {getInitials(user.name)}
+                    </span>
+                  )}
+                  <span className="text-sm font-medium text-secondary font-[family-name:var(--font-poppins)] max-w-[120px] truncate">
+                    {user.name.split(" ")[0]}
+                  </span>
+                  <ChevronDown
+                    size={14}
+                    className={`text-gray-400 transition-transform duration-200 ${isProfileOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {isProfileOpen && (
+                  <div className="absolute right-0 mt-2 w-56 rounded-xl bg-white border border-gray-100 shadow-lg shadow-gray-200/60 py-1 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-secondary font-[family-name:var(--font-poppins)] truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-text font-[family-name:var(--font-poppins)] truncate mt-0.5">
+                        {user.email}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-[family-name:var(--font-poppins)]"
+                    >
+                      <LogOut size={14} />
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,21 +201,59 @@ export default function Navbar() {
             >
               Pricing
             </a>
-            <div className="pt-4 space-y-3 border-t border-gray-100">
-              <button
-                onClick={() => scrollToSection("pricing")}
-                className="w-full text-left py-2 text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
-              >
-                Book a demo
-              </button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-full"
-                onClick={() => (window.location.href = "/pages/login")}
-              >
-                Get Started
-              </Button>
+
+            <div className="pt-4 border-t border-gray-100">
+              {!loading && !user && (
+                <div className="space-y-3">
+                  <button
+                    onClick={() => scrollToSection("pricing")}
+                    className="w-full text-left py-2 text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    Book a demo
+                  </button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => router.push("/pages/login")}
+                  >
+                    Get Started
+                  </Button>
+                </div>
+              )}
+
+              {!loading && user && (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 py-2">
+                    {user.avatar_url ? (
+                      <img
+                        src={user.avatar_url}
+                        alt={user.name}
+                        className="w-9 h-9 rounded-full object-cover shrink-0"
+                      />
+                    ) : (
+                      <span className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold font-[family-name:var(--font-poppins)] shrink-0">
+                        {getInitials(user.name)}
+                      </span>
+                    )}
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-secondary font-[family-name:var(--font-poppins)] truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-text font-[family-name:var(--font-poppins)] truncate">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 py-2.5 text-sm text-red-600 font-[family-name:var(--font-poppins)]"
+                  >
+                    <LogOut size={14} />
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

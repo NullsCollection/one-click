@@ -91,3 +91,18 @@ Button a {
   animation: marquee 25s linear infinite;
   width: max-content;
 }
+
+/* Dotted grid background */
+.dotted-grid {
+  background-image: radial-gradient(circle, #c5cdd8 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dotted-grid-fade {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    transparent,
+    rgba(255, 255, 255, 0.5)
+  );
+}

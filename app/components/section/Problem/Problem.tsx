@@ -32,7 +32,6 @@ export default function Problem() {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
         <div className="mb-16 text-center">
           <StatusPill
             className="mb-3 uppercase tracking-wider flex w-fit mx-auto"
@@ -49,30 +48,30 @@ export default function Problem() {
           </p>
         </div>
 
-        {/* Pain Points Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {painPoints.map((point, index) => (
             <div
               key={index}
-              className="relative p-7 rounded-2xl border border-gray-200 bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-300 group overflow-hidden"
+              className="relative p-7 rounded-2xl border border-gray-200 bg-white hover:border-primary/30 hover:shadow-lg transition-all duration-300 group overflow-hidden"
             >
-              {/* Top gradient line */}
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-              <div className="flex items-center gap-4 border-b border-gray-200 pb-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <point.Icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-[family-name:var(--font-spline-sans)] text-md font-bold text-secondary mb-2">
-                    {point.title}
-                  </h3>
-                </div>
+              {/* Large watermark number */}
+              <div className="absolute top-2 right-4 font-[family-name:var(--font-spline-sans)] text-8xl font-bold text-gray-100 leading-none select-none pointer-events-none">
+                {(index + 1).toString().padStart(2, "0")}
               </div>
 
-              <p className="text-sm text-text font-[family-name:var(--font-poppins)] leading-relaxed mt-4">
-                {point.description}
-              </p>
+              <div className="relative z-10">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                  <point.Icon className="w-5 h-5 text-primary" />
+                </div>
+
+                <h3 className="font-[family-name:var(--font-spline-sans)] text-base font-bold text-secondary mb-3 leading-snug">
+                  {point.title}
+                </h3>
+
+                <p className="text-sm text-text font-[family-name:var(--font-poppins)] leading-relaxed">
+                  {point.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>

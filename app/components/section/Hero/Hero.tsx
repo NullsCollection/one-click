@@ -5,20 +5,20 @@ import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative pt-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Gradient */}
+    <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white dotted-grid">
+      {/* Fade the grid out on edges */}
+      <div className="absolute inset-0 pointer-events-none dotted-grid-fade" />
+      {/* Brand glow */}
       <div className="absolute top-0 right-[-200px] w-[700px] h-[700px] bg-gradient-radial from-primary/8 to-transparent pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="relative z-10">
-            {/* Badge */}
             <StatusPill className="mb-6">
               Launching v1 · Now in early access
             </StatusPill>
 
-            {/* Headline */}
             <h1 className="font-[family-name:var(--font-spline-sans)] text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-secondary mb-6">
               Post to All Your Social Media in
               <br />
@@ -27,13 +27,11 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Subheadline */}
             <p className="font-[family-name:var(--font-poppins)] text-lg sm:text-xl text-text font-light leading-relaxed mb-9 max-w-md">
               A simple platform that automates your entire content posting
               workflow — from upload to publishing across multiple platforms.
             </p>
 
-            {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4 mb-12">
               <Button
                 variant="secondary"
@@ -52,7 +50,6 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Social Proof */}
             <div className="flex items-center gap-3 text-sm text-text">
               <div className="flex -space-x-2">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-purple-600 border-2 border-white text-white text-xs font-semibold">
@@ -76,7 +73,7 @@ export default function Hero() {
           {/* Right Visual - Dashboard Mock */}
           <div className="relative">
             {/* Floating Stat Card */}
-            <div className="absolute -top-4 -left-5 z-20 bg-white rounded-xl p-3 shadow-lg border border-gray-100 animate-float">
+            <div className="absolute -top-4 -left-5 z-20 bg-white rounded-xl p-3 shadow-[0_4px_24px_rgba(79,70,229,0.12)] border border-primary/10 animate-float">
               <div className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-primary leading-none">
                 3s
               </div>
@@ -84,12 +81,14 @@ export default function Hero() {
             </div>
 
             {/* Dashboard Mockup */}
-            <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transform perspective-1000 hover:rotate-y-0 transition-transform duration-500 lg:rotate-y-[-3deg] lg:rotate-x-[2deg]">
+            <div className="relative bg-white rounded-2xl shadow-[0_20px_60px_rgba(31,43,72,0.14)] border border-gray-100 overflow-hidden transform perspective-1000 hover:rotate-y-0 transition-transform duration-500 lg:rotate-y-[-3deg] lg:rotate-x-[2deg]">
+              {/* Top accent */}
+              <div className="h-0.5 bg-gradient-to-r from-primary via-purple-500 to-cyan-400" />
               {/* Header */}
               <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-200">
-                <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                <span className="w-3 h-3 rounded-full bg-red-400" />
+                <span className="w-3 h-3 rounded-full bg-yellow-400" />
+                <span className="w-3 h-3 rounded-full bg-green-400" />
                 <span className="flex-1 text-center text-xs font-medium text-text font-[family-name:var(--font-poppins)]">
                   OneClick · New Post
                 </span>
@@ -97,7 +96,6 @@ export default function Hero() {
 
               {/* Body */}
               <div className="p-5">
-                {/* Upload Zone */}
                 <div className="mb-4">
                   <div className="text-[10px] font-medium text-secondary uppercase tracking-wide mb-2">
                     IMAGES
@@ -131,7 +129,6 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Mode Toggle */}
                 <div className="flex gap-1 bg-gray-50 border border-gray-200 rounded-lg p-1 mb-4">
                   <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all">
                     Manual
@@ -144,7 +141,6 @@ export default function Hero() {
                   </button>
                 </div>
 
-                {/* Caption */}
                 <div className="relative bg-gray-50 border border-gray-200 rounded-lg p-3 mb-4 min-h-[60px]">
                   <p className="text-xs text-text leading-relaxed">
                     🚀 Excited to share our biggest product launch yet! Built
@@ -153,7 +149,6 @@ export default function Hero() {
                   </p>
                 </div>
 
-                {/* Platform Chips */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-primary bg-primary/10 text-primary">
                     <svg
@@ -177,7 +172,6 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Post Button */}
                 <button className="w-full bg-secondary text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-secondary/90 transition-colors shadow-sm">
                   <svg
                     className="w-3.5 h-3.5"
@@ -196,7 +190,7 @@ export default function Hero() {
             </div>
 
             {/* Floating Notification */}
-            <div className="absolute -bottom-5 -right-5 z-20 bg-white rounded-xl p-3 shadow-lg border border-gray-100 flex items-center gap-3 animate-float-delayed">
+            <div className="absolute -bottom-5 -right-5 z-20 bg-white rounded-xl p-3 shadow-[0_4px_24px_rgba(0,0,0,0.10)] border border-gray-100 flex items-center gap-3 animate-float-delayed">
               <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-base flex-shrink-0">
                 ✅
               </div>

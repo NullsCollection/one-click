@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, ArrowRight, Calendar } from "lucide-react";
-import { Button, StatusPill } from "../../components/ui";
+import { CheckCircle2, XCircle, Calendar, Zap, ChevronLeft } from "lucide-react";
+import { StatusPill } from "../../components/ui";
+import { cn } from "@/lib/utils";
 
 type Question = {
   id: string;
@@ -15,13 +16,13 @@ const questions: Question[] = [
     id: "has_n8n",
     question: "Do you have n8n?",
     description:
-      "n8n is an automation platform we use to power your posting workflow",
+      "n8n is the automation platform we use to power your posting workflow.",
   },
   {
     id: "has_inhouse_tech",
     question: "Do you have in-house tech support?",
     description:
-      "This helps us understand your technical setup and support needs",
+      "This helps us understand your technical setup and support needs.",
   },
 ];
 
@@ -34,232 +35,276 @@ export default function OnboardingPage() {
     const newAnswers = { ...answers, [questionId]: answer };
     setAnswers(newAnswers);
 
-    // Move to next question or show scheduling
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // All questions answered, show scheduling
       setShowScheduling(true);
     }
   };
 
   const goBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+    if (showScheduling) {
       setShowScheduling(false);
+    } else if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
     }
   };
 
-  if (showScheduling) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary/5 flex items-center justify-center px-4 py-12">
-        {/* Background decoration */}
-        <div className="absolute top-20 right-[-100px] w-[500px] h-[500px] bg-gradient-radial from-primary/10 to-transparent pointer-events-none" />
-        <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] bg-gradient-radial from-purple-400/10 to-transparent pointer-events-none" />
+  const totalSteps = questions.length + 1;
+  const activeStep = showScheduling ? questions.length : currentStep;
 
-        <div className="relative w-full max-w-3xl">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <StatusPill
-              className="mb-4 flex w-fit mx-auto"
-              showIndicator={false}
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Top bar */}
+      <header className="border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+        <a
+          href="/"
+          className="inline-flex items-center gap-2 text-secondary font-[family-name:var(--font-spline-sans)] text-lg font-bold"
+        >
+          <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+            <Zap className="w-4 h-4 text-white" />
+          </span>
+          OneClick
+        </a>
+
+        {/* Step dots */}
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: totalSteps }).map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "rounded-full transition-all duration-300",
+                i < activeStep
+                  ? "w-2 h-2 bg-primary"
+                  : i === activeStep
+                    ? "w-6 h-2 bg-primary"
+                    : "w-2 h-2 bg-gray-200"
+              )}
+            />
+          ))}
+        </div>
+
+        <a
+          href="/"
+          className="text-xs text-gray-400 hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
+        >
+          Skip
+        </a>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center px-4 py-12">
+        {showScheduling ? (
+          <SchedulingView
+            questions={questions}
+            answers={answers}
+            onBack={goBack}
+            onChangeAnswers={() => {
+              setShowScheduling(false);
+              setCurrentStep(0);
+            }}
+          />
+        ) : (
+          <QuestionView
+            question={questions[currentStep]}
+            currentStep={currentStep}
+            totalQuestions={questions.length}
+            onAnswer={handleAnswer}
+            onBack={goBack}
+          />
+        )}
+      </main>
+    </div>
+  );
+}
+
+function QuestionView({
+  question,
+  currentStep,
+  totalQuestions,
+  onAnswer,
+  onBack,
+}: {
+  question: Question;
+  currentStep: number;
+  totalQuestions: number;
+  onAnswer: (id: string, answer: boolean) => void;
+  onBack: () => void;
+}) {
+  return (
+    <div className="w-full max-w-lg">
+      <div className="text-center mb-10">
+        <StatusPill className="mb-5 mx-auto w-fit" showIndicator={false}>
+          Step {currentStep + 1} of {totalQuestions}
+        </StatusPill>
+        <h1 className="font-[family-name:var(--font-spline-sans)] text-4xl sm:text-5xl font-bold text-secondary mb-4 leading-tight">
+          {question.question}
+        </h1>
+        <p className="text-text font-[family-name:var(--font-poppins)] text-base max-w-sm mx-auto">
+          {question.description}
+        </p>
+      </div>
+
+      {/* Answer options */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <button
+          onClick={() => onAnswer(question.id, true)}
+          className="group p-7 rounded-2xl border-2 border-gray-200 hover:border-primary hover:bg-primary/[0.03] transition-all duration-200 text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+        >
+          <div className="w-12 h-12 rounded-xl bg-green-50 group-hover:bg-green-100 flex items-center justify-center transition-colors mb-4">
+            <CheckCircle2 className="w-6 h-6 text-green-500" />
+          </div>
+          <div className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-secondary mb-1">
+            Yes
+          </div>
+          <div className="text-xs text-text/60 font-[family-name:var(--font-poppins)]">
+            We've got it covered
+          </div>
+        </button>
+
+        <button
+          onClick={() => onAnswer(question.id, false)}
+          className="group p-7 rounded-2xl border-2 border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-gray-200"
+        >
+          <div className="w-12 h-12 rounded-xl bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center transition-colors mb-4">
+            <XCircle className="w-6 h-6 text-gray-400" />
+          </div>
+          <div className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-secondary mb-1">
+            No
+          </div>
+          <div className="text-xs text-text/60 font-[family-name:var(--font-poppins)]">
+            We'll help you set it up
+          </div>
+        </button>
+      </div>
+
+      {currentStep > 0 && (
+        <div className="text-center">
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-sm text-text hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Previous question
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SchedulingView({
+  questions,
+  answers,
+  onBack,
+  onChangeAnswers,
+}: {
+  questions: Question[];
+  answers: Record<string, boolean>;
+  onBack: () => void;
+  onChangeAnswers: () => void;
+}) {
+  return (
+    <div className="w-full max-w-2xl">
+      <div className="text-center mb-8">
+        <StatusPill className="mb-5 mx-auto w-fit" showIndicator={false}>
+          Final Step
+        </StatusPill>
+        <h1 className="font-[family-name:var(--font-spline-sans)] text-4xl sm:text-5xl font-bold text-secondary mb-3 leading-tight">
+          Book your setup call
+        </h1>
+        <p className="text-text font-[family-name:var(--font-poppins)] text-base max-w-md mx-auto">
+          We'll get everything configured and have you live in under 30
+          minutes.
+        </p>
+      </div>
+
+      {/* Profile summary */}
+      <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-[family-name:var(--font-poppins)] text-xs font-semibold text-secondary uppercase tracking-wide">
+            Your Setup Profile
+          </h3>
+          <button
+            onClick={onChangeAnswers}
+            className="text-xs text-primary hover:text-primary/80 font-[family-name:var(--font-poppins)] font-medium"
+          >
+            Edit answers
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {questions.map((q) => (
+            <div
+              key={q.id}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium font-[family-name:var(--font-poppins)] border",
+                answers[q.id]
+                  ? "bg-green-50 border-green-200 text-green-700"
+                  : "bg-orange-50 border-orange-200 text-orange-700"
+              )}
             >
-              Final Step
-            </StatusPill>
-            <h1 className="font-[family-name:var(--font-spline-sans)] text-4xl font-bold text-secondary mb-3">
-              Let's schedule your setup call
-            </h1>
-            <p className="text-text font-[family-name:var(--font-poppins)] text-lg max-w-2xl mx-auto">
-              Book a time that works for you. We'll get everything configured
-              and have you posting in no time.
+              <span
+                className={cn(
+                  "w-1.5 h-1.5 rounded-full",
+                  answers[q.id] ? "bg-green-500" : "bg-orange-400"
+                )}
+              />
+              {q.question.replace("Do you have ", "").replace("?", "")}:{" "}
+              <span className="font-semibold">
+                {answers[q.id] ? "Yes" : "No"}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cal.com embed */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6">
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Calendar className="w-4 h-4 text-primary" />
+          </div>
+          <div>
+            <div className="font-[family-name:var(--font-spline-sans)] font-bold text-secondary text-sm">
+              Schedule Your Setup Call
+            </div>
+            <div className="text-xs text-text font-[family-name:var(--font-poppins)]">
+              30 minutes · Free · Via Zoom or Google Meet
+            </div>
+          </div>
+        </div>
+
+        <div className="p-8 min-h-[380px] flex items-center justify-center">
+          <div className="text-center w-full">
+            <div className="w-16 h-16 rounded-2xl bg-primary/5 border-2 border-dashed border-primary/20 flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-7 h-7 text-primary/30" />
+            </div>
+            <p className="text-sm font-medium text-secondary font-[family-name:var(--font-poppins)] mb-1">
+              Cal.com embed goes here
             </p>
-          </div>
-
-          {/* Answers Summary */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-xl p-6 mb-6">
-            <h3 className="font-[family-name:var(--font-spline-sans)] text-lg font-bold text-secondary mb-4">
-              Your Setup Profile
-            </h3>
-            <div className="space-y-3">
-              {questions.map((q) => (
-                <div
-                  key={q.id}
-                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0"
-                >
-                  <span className="text-sm text-text font-[family-name:var(--font-poppins)]">
-                    {q.question}
-                  </span>
-                  <span
-                    className={`text-sm font-semibold font-[family-name:var(--font-poppins)] ${
-                      answers[q.id] ? "text-green-600" : "text-orange-600"
-                    }`}
-                  >
-                    {answers[q.id] ? "Yes" : "No"}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => {
-                setShowScheduling(false);
-                setCurrentStep(0);
-              }}
-              className="mt-4 text-sm text-primary hover:text-primary/80 font-[family-name:var(--font-poppins)] font-medium"
-            >
-              ← Change answers
-            </button>
-          </div>
-
-          {/* Cal.com Embed */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden">
-            <div className="p-6 border-b border-gray-100 bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-[family-name:var(--font-spline-sans)] text-lg font-bold text-secondary">
-                    Schedule Your Setup Call
-                  </h3>
-                  <p className="text-sm text-text font-[family-name:var(--font-poppins)]">
-                    Pick a time that works best for you
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Cal.com iframe placeholder */}
-            <div className="p-6 min-h-[600px] bg-white">
-              <div className="w-full h-[550px] border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-text font-[family-name:var(--font-poppins)] text-sm mb-2">
-                    Cal.com scheduling widget will be embedded here
-                  </p>
-                  <p className="text-text/60 font-[family-name:var(--font-poppins)] text-xs max-w-md">
-                    Replace this placeholder with your Cal.com embed code
-                  </p>
-                  <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200 max-w-md mx-auto">
-                    <code className="text-xs text-secondary font-mono">
-                      {`<Cal calLink="your-username/setup-call" />`}
-                    </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Skip Option */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => (window.location.href = "/dashboard")}
-              className="text-sm text-text hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
-            >
-              Skip for now, I'll schedule later →
-            </button>
+            <p className="text-xs text-text/60 font-[family-name:var(--font-poppins)] mb-4 max-w-xs mx-auto">
+              Replace with your Cal.com embed code
+            </p>
+            <code className="inline-block text-xs bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 font-mono text-secondary">
+              {'<Cal calLink="your-username/setup-call" />'}
+            </code>
           </div>
         </div>
       </div>
-    );
-  }
 
-  const currentQuestion = questions[currentStep];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary/5 flex items-center justify-center px-4 py-12">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-[-100px] w-[500px] h-[500px] bg-gradient-radial from-primary/10 to-transparent pointer-events-none" />
-      <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] bg-gradient-radial from-purple-400/10 to-transparent pointer-events-none" />
-
-      <div className="relative w-full max-w-2xl">
-        {/* Progress */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-text font-[family-name:var(--font-poppins)]">
-              Question {currentStep + 1} of {questions.length}
-            </span>
-            <span className="text-sm text-text font-[family-name:var(--font-poppins)]">
-              {Math.round(((currentStep + 1) / questions.length) * 100)}%
-              complete
-            </span>
-          </div>
-          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary transition-all duration-300"
-              style={{
-                width: `${((currentStep + 1) / questions.length) * 100}%`,
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Question Card */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-xl p-8 mb-6">
-          <div className="text-center mb-8">
-            <h1 className="font-[family-name:var(--font-spline-sans)] text-3xl font-bold text-secondary mb-3">
-              {currentQuestion.question}
-            </h1>
-            <p className="text-text font-[family-name:var(--font-poppins)] text-base max-w-xl mx-auto">
-              {currentQuestion.description}
-            </p>
-          </div>
-
-          {/* Answer Buttons */}
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={() => handleAnswer(currentQuestion.id, true)}
-              className="group relative p-6 rounded-xl border-2 border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-200"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-green-100 group-hover:bg-green-200 flex items-center justify-center transition-colors">
-                  <CheckCircle2 className="w-6 h-6 text-green-600" />
-                </div>
-                <span className="font-[family-name:var(--font-spline-sans)] text-xl font-bold text-secondary">
-                  Yes
-                </span>
-              </div>
-            </button>
-
-            <button
-              onClick={() => handleAnswer(currentQuestion.id, false)}
-              className="group relative p-6 rounded-xl border-2 border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-200"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-orange-100 group-hover:bg-orange-200 flex items-center justify-center transition-colors">
-                  <div className="w-6 h-6 rounded-full border-3 border-orange-600 relative">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-4 h-0.5 bg-orange-600 rotate-45" />
-                    </div>
-                  </div>
-                </div>
-                <span className="font-[family-name:var(--font-spline-sans)] text-xl font-bold text-secondary">
-                  No
-                </span>
-              </div>
-            </button>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex items-center justify-between">
-          {currentStep > 0 ? (
-            <button
-              onClick={goBack}
-              className="text-sm text-text hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
-            >
-              ← Previous question
-            </button>
-          ) : (
-            <div />
-          )}
-
-          <a
-            href="/"
-            className="text-sm text-text hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
-          >
-            Skip onboarding
-          </a>
-        </div>
+      <div className="flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="inline-flex items-center gap-1.5 text-sm text-text hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back
+        </button>
+        <button
+          onClick={() => (window.location.href = "/dashboard")}
+          className="text-sm text-text/60 hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
+        >
+          Skip, I'll schedule later →
+        </button>
       </div>
     </div>
   );

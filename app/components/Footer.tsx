@@ -1,3 +1,5 @@
+import { Zap } from "lucide-react";
+
 const footerLinks = {
   Product: [
     { label: "Features", href: "#feature" },
@@ -27,7 +29,9 @@ export default function Footer() {
               href="#top"
               className="inline-flex items-center gap-2 text-white font-[family-name:var(--font-spline-sans)] text-xl font-bold"
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+              <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                <Zap className="w-4 h-4 text-white" />
+              </span>
               OneClick
             </a>
             <p className="mt-4 text-sm text-slate-400 font-[family-name:var(--font-poppins)] leading-relaxed">

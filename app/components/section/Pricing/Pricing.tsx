@@ -88,84 +88,139 @@ export default function Pricing() {
           {plans.map((plan) => (
             <article
               key={plan.name}
-              className={`relative flex flex-col rounded-2xl border p-7 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+              className={`relative flex flex-col rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-1 ${
                 plan.highlighted
-                  ? "border-primary shadow-[0_10px_30px_rgba(79,70,229,0.16)] lg:scale-[1.03] lg:z-10"
-                  : "border-gray-200"
+                  ? "bg-secondary border-secondary shadow-[0_12px_40px_rgba(31,43,72,0.30)] lg:scale-[1.03] lg:z-10 hover:shadow-[0_20px_60px_rgba(31,43,72,0.40)]"
+                  : "bg-white border-gray-200 hover:shadow-lg hover:border-gray-300"
               }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary text-white px-3 py-1 text-xs font-semibold shadow-[inset_0_-2px_0_rgba(0,0,0,0.16)]">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Most Popular
-                </div>
+                <>
+                  {/* Background decoration */}
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-primary/15 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+                  {/* Badge */}
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-primary text-white px-3.5 py-1.5 text-xs font-semibold shadow-[inset_0_-2px_0_rgba(0,0,0,0.18)] z-10">
+                    <Sparkles className="w-3 h-3" />
+                    Most Popular
+                  </div>
+                </>
               )}
 
-              <div className="mb-5">
-                <p className="text-xs uppercase tracking-wider text-primary font-semibold mb-2">
+              <div className="relative z-10 mb-5">
+                <p
+                  className={`text-xs uppercase tracking-wider font-semibold mb-2 ${
+                    plan.highlighted ? "text-primary/80" : "text-primary"
+                  }`}
+                  style={plan.highlighted ? { color: "#818cf8" } : {}}
+                >
                   {plan.subtitle}
                 </p>
-                <h3 className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-secondary mb-1">
+                <h3
+                  className={`font-[family-name:var(--font-spline-sans)] text-2xl font-bold mb-1 ${
+                    plan.highlighted ? "text-white" : "text-secondary"
+                  }`}
+                >
                   {plan.name}
                 </h3>
                 {plan.tagline && (
-                  <p className="text-sm text-text font-[family-name:var(--font-poppins)] font-light mb-3">
+                  <p
+                    className={`text-sm font-[family-name:var(--font-poppins)] font-light mb-3 ${
+                      plan.highlighted ? "text-white/60" : "text-text"
+                    }`}
+                  >
                     {plan.tagline}
                   </p>
                 )}
               </div>
 
-              <div className="mb-6 border-y border-gray-100 py-5">
+              <div
+                className={`relative z-10 mb-6 border-y py-5 ${
+                  plan.highlighted ? "border-white/10" : "border-gray-100"
+                }`}
+              >
                 <div>
-                  <span className="font-[family-name:var(--font-spline-sans)] text-4xl font-bold text-secondary">
+                  <span
+                    className={`font-[family-name:var(--font-spline-sans)] text-4xl font-bold ${
+                      plan.highlighted ? "text-white" : "text-secondary"
+                    }`}
+                  >
                     {plan.price}
                   </span>
-                  <span className="text-text text-base ml-1">
+                  <span
+                    className={`text-base ml-1 ${
+                      plan.highlighted ? "text-white/60" : "text-text"
+                    }`}
+                  >
                     {plan.period}
                   </span>
                 </div>
                 {plan.periodNote && (
-                  <p className="text-xs text-text/70 mt-1 font-[family-name:var(--font-poppins)]">
+                  <p
+                    className={`text-xs mt-1 font-[family-name:var(--font-poppins)] ${
+                      plan.highlighted ? "text-white/40" : "text-text/70"
+                    }`}
+                  >
                     {plan.periodNote}
                   </p>
                 )}
               </div>
 
-              <p className="text-xs text-text mb-4 font-[family-name:var(--font-poppins)]">
+              <p
+                className={`relative z-10 text-xs mb-4 font-[family-name:var(--font-poppins)] ${
+                  plan.highlighted ? "text-white/50" : "text-text"
+                }`}
+              >
                 Best for{" "}
-                <span className="text-secondary font-medium">
+                <span
+                  className={`font-medium ${
+                    plan.highlighted ? "text-white/80" : "text-secondary"
+                  }`}
+                >
                   {plan.bestFor}
                 </span>
               </p>
 
-              <ul className="space-y-3 mb-7">
+              <ul className="relative z-10 space-y-3 mb-7">
                 {plan.features.map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-start gap-2.5 text-sm text-text"
+                    className="flex items-start gap-2.5 text-sm"
                   >
-                    <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <span
+                      className={`mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full flex-shrink-0 ${
+                        plan.highlighted
+                          ? "bg-white/15 text-white"
+                          : "bg-primary/10 text-primary"
+                      }`}
+                    >
                       <Check className="w-3.5 h-3.5" />
                     </span>
-                    <span className="font-[family-name:var(--font-poppins)] leading-relaxed">
+                    <span
+                      className={`font-[family-name:var(--font-poppins)] leading-relaxed ${
+                        plan.highlighted ? "text-white/75" : "text-text"
+                      }`}
+                    >
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              <Button
-                variant={plan.highlighted ? "secondary" : "primary"}
-                size="md"
-                className="w-full mt-auto"
-              >
-                {plan.cta}
-              </Button>
+              <div className="relative z-10 mt-auto">
+                <Button
+                  variant={plan.highlighted ? "primary" : "secondary"}
+                  size="md"
+                  className="w-full"
+                >
+                  {plan.cta}
+                </Button>
+              </div>
             </article>
           ))}
         </div>
 
-        <p className="mt-6 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-700 font-[family-name:var(--font-poppins)]">
+        <p className="mt-6 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-600 font-[family-name:var(--font-poppins)]">
           Note: Setup & Go plans have an additional maintenance fee for API
           token renewal, node fixes, and minor tweaks. Cancel anytime for
           monthly plans.
