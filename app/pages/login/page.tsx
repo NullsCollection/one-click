@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Mail, Lock, ArrowRight, Eye, EyeOff, Zap } from "lucide-react";
 import { Button } from "../../components/ui";
 import { useAuth } from "@/app/context/AuthContext";
@@ -17,7 +17,6 @@ const OAUTH_ERRORS: Record<string, string> = {
 export default function LoginPage() {
   const { login, loginWithGoogle } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,13 +27,14 @@ export default function LoginPage() {
 
   // Show error from Google OAuth redirect (e.g. ?error=auth_failed)
   useEffect(() => {
-    const oauthError = searchParams.get("error");
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get("error");
     if (oauthError) {
       setError(
         OAUTH_ERRORS[oauthError] ?? "Google login failed. Please try again.",
       );
     }
-  }, [searchParams]);
+  }, []);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
