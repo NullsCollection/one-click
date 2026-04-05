@@ -39,3 +39,14 @@ export function getMe() {
 export function refreshToken() {
   return request<{ message: string }>("/api/auth/refresh", { method: "POST" });
 }
+
+export function verifyEmail(token: string) {
+  return request<AuthResponse>(`/api/auth/verify-email?token=${encodeURIComponent(token)}`);
+}
+
+export function resendVerification(email: string) {
+  return request<{ message: string }>("/api/auth/resend-verification", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}

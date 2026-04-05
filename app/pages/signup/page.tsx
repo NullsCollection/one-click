@@ -79,7 +79,7 @@ export default function SignUpPage() {
     setLoading(true);
     try {
       await signup(name, email, password);
-      router.push("/pages/onboarding");
+      router.push(`/pages/verify-email?email=${encodeURIComponent(email)}`);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);

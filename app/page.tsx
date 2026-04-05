@@ -24,7 +24,7 @@ export default function Home() {
       <BeforeAfter />
       <HowItWorks />
       <Features />
-      <Pricing />
+      {/* <Pricing /> */}
       <WhyDifferent />
       <BuiltToLast />
       <GetStarted />

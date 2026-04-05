@@ -1,8 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, XCircle, Calendar, Zap, ChevronLeft } from "lucide-react";
+import { useState, useEffect } from "react";
+import {
+  CheckCircle2,
+  XCircle,
+  Calendar,
+  Zap,
+  ChevronLeft,
+} from "lucide-react";
+import Cal, { getCalApi } from "@calcom/embed-react";
 import { StatusPill } from "../../components/ui";
+import { useAuth } from "../../../app/context/AuthContext";
 import { cn } from "@/lib/utils";
 
 type Question = {
@@ -78,7 +86,7 @@ export default function OnboardingPage() {
                   ? "w-2 h-2 bg-primary"
                   : i === activeStep
                     ? "w-6 h-2 bg-primary"
-                    : "w-2 h-2 bg-gray-200"
+                    : "w-2 h-2 bg-gray-200",
               )}
             />
           ))}
@@ -203,6 +211,44 @@ function SchedulingView({
   onBack: () => void;
   onChangeAnswers: () => void;
 }) {
+  const { user } = useAuth();
+
+  // Pre-build the notes string from onboarding answers so Cal.com
+  // shows the user's profile to your team before the call.
+  const notes = questions
+    .map(
+      (q) =>
+        `${q.question.replace("Do you have ", "").replace("?", "")}: ${answers[q.id] ? "Yes" : "No"}`,
+    )
+    .join(", ");
+
+  useEffect(() => {
+    (async () => {
+      const cal = await getCalApi({ namespace: "setup-call" });
+      cal("ui", {
+        theme: "light",
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: (e: CustomEvent) => {
+          const booking = e.detail?.data ?? {};
+          fetch("/api/schedule-webhook", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: user?.name ?? booking?.attendees?.[0]?.name ?? "",
+              email: user?.email ?? booking?.attendees?.[0]?.email ?? "",
+              booking,
+              onboarding: answers,
+            }),
+          }).catch((err) => console.error("schedule webhook error", err));
+        },
+      });
+    })();
+  }, [user, answers]);
+
   return (
     <div className="w-full max-w-2xl">
       <div className="text-center mb-8">
@@ -213,8 +259,7 @@ function SchedulingView({
           Book your setup call
         </h1>
         <p className="text-text font-[family-name:var(--font-poppins)] text-base max-w-md mx-auto">
-          We'll get everything configured and have you live in under 30
-          minutes.
+          We'll get everything configured and have you live in under 30 minutes.
         </p>
       </div>
 
@@ -239,13 +284,13 @@ function SchedulingView({
                 "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium font-[family-name:var(--font-poppins)] border",
                 answers[q.id]
                   ? "bg-green-50 border-green-200 text-green-700"
-                  : "bg-orange-50 border-orange-200 text-orange-700"
+                  : "bg-orange-50 border-orange-200 text-orange-700",
               )}
             >
               <span
                 className={cn(
                   "w-1.5 h-1.5 rounded-full",
-                  answers[q.id] ? "bg-green-500" : "bg-orange-400"
+                  answers[q.id] ? "bg-green-500" : "bg-orange-400",
                 )}
               />
               {q.question.replace("Do you have ", "").replace("?", "")}:{" "}
@@ -257,7 +302,7 @@ function SchedulingView({
         </div>
       </div>
 
-      {/* Cal.com embed */}
+      {/* Cal.com inline embed */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6">
         <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -273,22 +318,18 @@ function SchedulingView({
           </div>
         </div>
 
-        <div className="p-8 min-h-[380px] flex items-center justify-center">
-          <div className="text-center w-full">
-            <div className="w-16 h-16 rounded-2xl bg-primary/5 border-2 border-dashed border-primary/20 flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-7 h-7 text-primary/30" />
-            </div>
-            <p className="text-sm font-medium text-secondary font-[family-name:var(--font-poppins)] mb-1">
-              Cal.com embed goes here
-            </p>
-            <p className="text-xs text-text/60 font-[family-name:var(--font-poppins)] mb-4 max-w-xs mx-auto">
-              Replace with your Cal.com embed code
-            </p>
-            <code className="inline-block text-xs bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 font-mono text-secondary">
-              {'<Cal calLink="your-username/setup-call" />'}
-            </code>
-          </div>
-        </div>
+        <Cal
+          namespace="setup-call"
+          calLink={process.env.NEXT_PUBLIC_CAL_LINK || ""}
+          style={{ width: "100%", height: "100%", minHeight: "500px" }}
+          config={{
+            layout: "month_view",
+            theme: "light",
+            name: user?.name ?? "",
+            email: user?.email ?? "",
+            notes,
+          }}
+        />
       </div>
 
       <div className="flex items-center justify-between">
@@ -300,7 +341,7 @@ function SchedulingView({
           Back
         </button>
         <button
-          onClick={() => (window.location.href = "/dashboard")}
+          onClick={() => (window.location.href = "../Homepage")}
           className="text-sm text-text/60 hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
         >
           Skip, I'll schedule later →

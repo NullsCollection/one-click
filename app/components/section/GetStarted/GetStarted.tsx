@@ -36,7 +36,7 @@ export default function GetStarted() {
             variant="primary"
             size="md"
             className="min-w-[220px]"
-            onClick={() => (window.location.href = "#pricing")}
+            onClick={() => (window.location.href = "/pages/login")}
           >
             Get Started
             <ArrowRight size={18} />

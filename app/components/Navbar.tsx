@@ -85,12 +85,19 @@ export default function Navbar() {
             >
               Feature
             </a>
-            <a
+            {/* <a
               href="#pricing"
               className="text-text font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-secondary transition-colors"
               onClick={(event) => handleAnchorClick(event, "pricing")}
             >
               Pricing
+            </a> */}
+            <a
+              href="#problem"
+              className="text-text font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-secondary transition-colors"
+              onClick={(event) => handleAnchorClick(event, "problem")}
+            >
+              Solution
             </a>
           </div>
 
