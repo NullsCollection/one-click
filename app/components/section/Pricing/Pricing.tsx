@@ -1,12 +1,17 @@
+"use client";
+
 import { Check, Sparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 import { Button, StatusPill } from "../../ui";
 
 const plans = [
   {
+    planKey: "starter",
     name: "Setup & Go",
     subtitle: "Starter",
     tagline: "You own it, I'll build it",
-    price: "$299",
+    price: "$349",
     period: "one-time",
     periodNote: "No recurring fee — it's yours forever",
     bestFor: "freelancers & budget-conscious teams",
@@ -17,12 +22,13 @@ const plans = [
       "Initial testing & handover walkthrough",
       "You manage & maintain after setup",
     ],
-    cta: "Get started",
+    cta: "Book a call",
     maintenanceNote:
       "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
     highlighted: false,
   },
   {
+    planKey: "managed",
     name: "Done for You",
     subtitle: "Managed",
     tagline: "I run it all — you just post",
@@ -38,12 +44,13 @@ const plans = [
       "Priority support via chat",
       "Cancel anytime",
     ],
-    cta: "Get started",
+    cta: "Book a call",
     maintenanceNote:
       "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
     highlighted: true,
   },
   {
+    planKey: "agency",
     name: "Growth & Scale",
     subtitle: "Agency",
     tagline: "Full power, multiple brands",
@@ -66,6 +73,17 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  const handlePlanCTA = (planKey: string) => {
+    if (user) {
+      router.push(`/pages/onboarding?plan=${planKey}`);
+    } else {
+      router.push(`/pages/login?redirect=/pages/onboarding?plan=${planKey}`);
+    }
+  };
+
   return (
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -212,6 +230,7 @@ export default function Pricing() {
                   variant={plan.highlighted ? "primary" : "secondary"}
                   size="md"
                   className="w-full"
+                  onClick={() => handlePlanCTA(plan.planKey)}
                 >
                   {plan.cta}
                 </Button>

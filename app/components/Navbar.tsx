@@ -89,19 +89,19 @@ export default function Navbar() {
             >
               Feature
             </a>
-            {/* <a
+            <a
               href="#pricing"
               className="text-text font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-secondary transition-colors"
               onClick={(event) => handleAnchorClick(event, "pricing")}
             >
               Pricing
-            </a> */}
+            </a>
             <a
-              href="#problem"
+              href="#custom-workflow"
               className="text-text font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-secondary transition-colors"
-              onClick={(event) => handleAnchorClick(event, "problem")}
+              onClick={(event) => handleAnchorClick(event, "custom-workflow")}
             >
-              Solution
+              Custom
             </a>
           </div>
 
@@ -110,7 +110,7 @@ export default function Navbar() {
             {!loading && !user && (
               <>
                 <button
-                  onClick={() => scrollToSection("pricing")}
+                  onClick={() => router.push("/pages/login")}
                   className="text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
                 >
                   Book a demo
@@ -212,12 +212,19 @@ export default function Navbar() {
             >
               Pricing
             </a>
+            <a
+              href="#custom-workflow"
+              className="block py-2 text-text font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-secondary transition-colors"
+              onClick={(event) => handleAnchorClick(event, "custom-workflow")}
+            >
+              Custom
+            </a>
 
             <div className="pt-4 border-t border-gray-100">
               {!loading && !user && (
                 <div className="space-y-3">
                   <button
-                    onClick={() => scrollToSection("pricing")}
+                    onClick={() => router.push("/pages/login")}
                     className="w-full text-left py-2 text-secondary font-[family-name:var(--font-poppins)] text-sm font-medium hover:text-primary transition-colors"
                   >
                     Book a demo

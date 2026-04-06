@@ -10,6 +10,7 @@ import { Pricing } from "./components/section/Pricing";
 import { WhyDifferent } from "./components/section/WhyDifferent";
 import { BuiltToLast } from "./components/section/BuiltToLast";
 import { GetStarted } from "./components/section/GetStarted";
+import { CustomWorkflow } from "./components/section/CustomWorkflow";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -24,7 +25,8 @@ export default function Home() {
       <BeforeAfter />
       <HowItWorks />
       <Features />
-      {/* <Pricing /> */}
+      <Pricing />
+      <CustomWorkflow />
       <WhyDifferent />
       <BuiltToLast />
       <GetStarted />

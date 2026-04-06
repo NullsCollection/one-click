@@ -43,7 +43,9 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password, rememberMe);
-      router.push("/pages/onboarding");
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect") ?? "/pages/onboarding";
+      router.push(redirect);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);

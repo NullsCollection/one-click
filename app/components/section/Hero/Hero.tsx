@@ -44,7 +44,7 @@ export default function Hero() {
               </Button>
               <a
                 href="#how-it-works"
-                className="inline-flex items-center justify-center rounded-xl border border-secondary/35 border-b-4 px-8 py-4 text-lg font-[family-name:var(--font-poppins)] font-medium text-secondary hover:border-primary/50 hover:text-primary transition-all active:border-b-2 active:translate-y-0.5"
+                className="inline-flex items-center justify-center rounded-xl bg-white border border-secondary/35 border-b-4 px-8 py-4 text-lg font-[family-name:var(--font-poppins)] font-medium text-secondary hover:border-primary/50 hover:text-primary transition-all active:border-b-2 active:translate-y-0.5"
               >
                 See how it works
               </a>
@@ -75,7 +75,7 @@ export default function Hero() {
             {/* Floating Stat Card */}
             <div className="absolute -top-4 -left-5 z-20 bg-white rounded-xl p-3 shadow-[0_4px_24px_rgba(79,70,229,0.12)] border border-primary/10 animate-float">
               <div className="font-[family-name:var(--font-spline-sans)] text-2xl font-bold text-primary leading-none">
-                3s
+                10s
               </div>
               <div className="text-xs text-text mt-1">avg. post time</div>
             </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle2, XCircle, Calendar, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -29,10 +30,35 @@ const questions: Question[] = [
   },
 ];
 
+const PLAN_LABELS: Record<string, { label: string; price: string }> = {
+  starter: { label: "Setup & Go", price: "$349 one-time" },
+  managed: { label: "Done for You", price: "$599/mo" },
+  agency:  { label: "Growth & Scale", price: "$1,499/mo" },
+  custom:  { label: "Custom Workflow", price: "Custom pricing" },
+};
+
 export default function OnboardingPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedPlan = searchParams.get("plan") ?? null;
+  const { user, loading } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [showScheduling, setShowScheduling] = useState(false);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/pages/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-6 h-6 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   const handleAnswer = (questionId: string, answer: boolean) => {
     const newAnswers = { ...answers, [questionId]: answer };
@@ -98,6 +124,7 @@ export default function OnboardingPage() {
           <SchedulingView
             questions={questions}
             answers={answers}
+            selectedPlan={selectedPlan}
             onBack={goBack}
             onChangeAnswers={() => {
               setShowScheduling(false);
@@ -196,11 +223,13 @@ function QuestionView({
 function SchedulingView({
   questions,
   answers,
+  selectedPlan,
   onBack,
   onChangeAnswers,
 }: {
   questions: Question[];
   answers: Record<string, boolean>;
+  selectedPlan: string | null;
   onBack: () => void;
   onChangeAnswers: () => void;
 }) {
@@ -271,6 +300,18 @@ function SchedulingView({
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
+          {selectedPlan && PLAN_LABELS[selectedPlan] && (
+            <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium font-[family-name:var(--font-poppins)] border bg-primary/10 border-primary/20 text-primary">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              Plan:{" "}
+              <span className="font-semibold">
+                {PLAN_LABELS[selectedPlan].label}
+              </span>
+              <span className="text-primary/60">
+                · {PLAN_LABELS[selectedPlan].price}
+              </span>
+            </div>
+          )}
           {questions.map((q) => (
             <div
               key={q.id}
