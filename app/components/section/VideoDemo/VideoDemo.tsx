@@ -1,4 +1,4 @@
-import { Play, Clock3, Sparkles } from "lucide-react";
+import { Clock3, Sparkles } from "lucide-react";
 import { StatusPill } from "../../ui";
 
 export default function VideoDemo() {
@@ -32,15 +32,14 @@ export default function VideoDemo() {
             SaaS Workflow Demo
           </div>
 
-          <div className="relative aspect-video w-full rounded-xl bg-[radial-gradient(circle_at_30%_20%,rgba(79,70,229,0.35),transparent_45%),radial-gradient(circle_at_70%_80%,rgba(34,211,238,0.28),transparent_40%),linear-gradient(135deg,#0f172a,#1e293b)] border border-white/10">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="group inline-flex items-center gap-3 rounded-full bg-white text-secondary px-5 py-3 text-sm font-semibold shadow-lg hover:scale-105 transition-transform">
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
-                  <Play className="h-4 w-4 fill-current" />
-                </span>
-                Play Demo Video
-              </button>
-            </div>
+          <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-white/10">
+            <iframe
+              src="https://www.youtube.com/embed/R3rH4fVGPAI"
+              title="Product Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
           </div>
         </div>
       </div>
