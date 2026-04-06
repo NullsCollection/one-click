@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, type MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, X, ArrowRight, LogOut, ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { Button } from "./ui";
 import { useAuth } from "@/app/context/AuthContext";
 
@@ -64,9 +65,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-secondary font-[family-name:var(--font-spline-sans)]">
-              OneClick
-            </h1>
+            <a href="/" className="inline-flex items-center gap-2">
+              <Image src="/favicon.ico" alt="OneClick" width={32} height={32} />
+              <span className="text-2xl font-bold text-secondary font-[family-name:var(--font-spline-sans)]">
+                OneClick
+              </span>
+            </a>
           </div>
 
           {/* Desktop Navigation */}

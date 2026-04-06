@@ -2,16 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Mail,
-  Lock,
-  User,
-  ArrowRight,
-  Eye,
-  EyeOff,
-  Zap,
-  Check,
-} from "lucide-react";
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Check } from "lucide-react";
+import Image from "next/image";
 import { Button } from "../../components/ui";
 import { useAuth } from "../../context/AuthContext";
 import { ApiError } from "@/lib/api";
@@ -134,7 +126,7 @@ export default function SignUpPage() {
           className="relative z-10 inline-flex items-center gap-2 text-white font-[family-name:var(--font-spline-sans)] text-xl font-bold"
         >
           <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
+            <Image src="/favicon.ico" alt="OneClick" width={28} height={28} />
           </span>
           OneClick
         </a>
@@ -211,9 +203,7 @@ export default function SignUpPage() {
             href="/"
             className="inline-flex items-center gap-2 text-secondary font-[family-name:var(--font-spline-sans)] text-xl font-bold"
           >
-            <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
-            </span>
+            <Image src="/favicon.ico" alt="OneClick" width={28} height={28} />
             OneClick
           </a>
         </div>

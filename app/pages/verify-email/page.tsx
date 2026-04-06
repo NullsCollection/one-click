@@ -2,7 +2,8 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { Mail, Zap, RefreshCw, CheckCircle } from "lucide-react";
+import { Mail, RefreshCw, CheckCircle } from "lucide-react";
+import Image from "next/image";
 import * as authApi from "@/lib/auth";
 import { ApiError } from "@/lib/api";
 
@@ -102,9 +103,7 @@ export default function VerifyEmailPage() {
         href="/"
         className="inline-flex items-center gap-2 text-secondary font-[family-name:var(--font-spline-sans)] text-xl font-bold mb-12"
       >
-        <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-          <Zap className="w-4 h-4 text-white" />
-        </span>
+        <Image src="/favicon.ico" alt="OneClick" width={28} height={28} />
         OneClick
       </a>
 

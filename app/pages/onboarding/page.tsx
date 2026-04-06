@@ -1,13 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  CheckCircle2,
-  XCircle,
-  Calendar,
-  Zap,
-  ChevronLeft,
-} from "lucide-react";
+import { CheckCircle2, XCircle, Calendar, ChevronLeft } from "lucide-react";
+import Image from "next/image";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { StatusPill } from "../../components/ui";
 import { useAuth } from "../../../app/context/AuthContext";
@@ -69,9 +64,7 @@ export default function OnboardingPage() {
           href="/"
           className="inline-flex items-center gap-2 text-secondary font-[family-name:var(--font-spline-sans)] text-lg font-bold"
         >
-          <span className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
-          </span>
+          <Image src="/favicon.ico" alt="OneClick" width={28} height={28} />
           OneClick
         </a>
 
@@ -223,6 +216,7 @@ function SchedulingView({
     .join(", ");
 
   useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_CAL_LINK) return;
     (async () => {
       const cal = await getCalApi({ namespace: "setup-call" });
       cal("ui", {
@@ -318,18 +312,24 @@ function SchedulingView({
           </div>
         </div>
 
-        <Cal
-          namespace="setup-call"
-          calLink={process.env.NEXT_PUBLIC_CAL_LINK || ""}
-          style={{ width: "100%", height: "100%", minHeight: "500px" }}
-          config={{
-            layout: "month_view",
-            theme: "light",
-            name: user?.name ?? "",
-            email: user?.email ?? "",
-            notes,
-          }}
-        />
+        {process.env.NEXT_PUBLIC_CAL_LINK ? (
+          <Cal
+            namespace="setup-call"
+            calLink={process.env.NEXT_PUBLIC_CAL_LINK}
+            style={{ width: "100%", height: "100%", minHeight: "500px" }}
+            config={{
+              layout: "month_view",
+              theme: "light",
+              name: user?.name ?? "",
+              email: user?.email ?? "",
+              notes,
+            }}
+          />
+        ) : (
+          <div className="flex items-center justify-center min-h-[200px] text-sm text-text font-[family-name:var(--font-poppins)]">
+            Scheduling unavailable — please contact us directly.
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-between">
@@ -341,7 +341,7 @@ function SchedulingView({
           Back
         </button>
         <button
-          onClick={() => (window.location.href = "../Homepage")}
+          onClick={() => (window.location.href = "/")}
           className="text-sm text-text/60 hover:text-secondary font-[family-name:var(--font-poppins)] transition-colors"
         >
           Skip, I'll schedule later →
