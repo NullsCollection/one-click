@@ -56,7 +56,7 @@ export default function Features() {
           {featureItems.map((feature) => (
             <article
               key={feature.title}
-              className={`relative overflow-hidden rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+              className={`relative overflow-hidden rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-default ${
                 feature.dark
                   ? "bg-secondary border-secondary"
                   : "bg-white border-gray-200 hover:border-primary/30"

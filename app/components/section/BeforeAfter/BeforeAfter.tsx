@@ -1,46 +1,54 @@
+import type { LucideIcon } from "lucide-react";
 import {
   CheckCircle2,
   Clock3,
   RefreshCw,
   Sparkles,
   XCircle,
+  Repeat2,
+  Pencil,
+  Timer,
+  Upload,
+  Zap,
+  Bot,
+  Rocket,
 } from "lucide-react";
 import { StatusPill } from "../../ui";
 
 const beforeItems = [
   {
-    icon: "😤",
+    Icon: Repeat2,
     text: "Upload the same content to multiple platforms manually",
   },
   {
-    icon: "🔄",
+    Icon: RefreshCw,
     text: "Switch apps, log in repeatedly, and navigate different UIs",
   },
   {
-    icon: "✍️",
+    Icon: Pencil,
     text: "Write captions from scratch every single time",
   },
   {
-    icon: "⏰",
+    Icon: Timer,
     text: "Spend 15–30 minutes per post",
   },
 ];
 
 const afterItems = [
   {
-    icon: "⬆️",
+    Icon: Upload,
     text: "Upload once — done",
   },
   {
-    icon: "⚡",
+    Icon: Zap,
     text: "One click sends your post to all selected channels",
   },
   {
-    icon: "🤖",
+    Icon: Bot,
     text: "AI writes the caption for you (or you write it — your choice)",
   },
   {
-    icon: "🚀",
+    Icon: Rocket,
     text: "Go live in under 3 seconds",
   },
 ];
@@ -52,13 +60,13 @@ function CompareCard({
 }: {
   tone: "before" | "after";
   title: string;
-  items: { icon: string; text: string }[];
+  items: { Icon: LucideIcon; text: string }[];
 }) {
   const isBefore = tone === "before";
 
   return (
     <div
-      className={`rounded-2xl border overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+      className={`rounded-2xl border overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-default ${
         isBefore ? "border-rose-100" : "border-emerald-100"
       }`}
     >
@@ -83,7 +91,15 @@ function CompareCard({
             key={item.text}
             className="flex items-start gap-3 border-b border-gray-100 pb-3 last:border-0 last:pb-0"
           >
-            <span className="text-base leading-none mt-0.5">{item.icon}</span>
+            <span
+              className={`flex-shrink-0 mt-0.5 w-5 h-5 flex items-center justify-center rounded-full ${
+                isBefore
+                  ? "bg-rose-100 text-rose-500"
+                  : "bg-emerald-100 text-emerald-600"
+              }`}
+            >
+              <item.Icon className="w-3 h-3" />
+            </span>
             <p className="text-sm text-text font-[family-name:var(--font-poppins)] leading-relaxed">
               {item.text}
             </p>

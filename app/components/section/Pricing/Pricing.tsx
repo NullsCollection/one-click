@@ -7,6 +7,28 @@ import { Button, StatusPill } from "../../ui";
 
 const plans = [
   {
+    planKey: "managed",
+    name: "Done for You",
+    subtitle: "Managed",
+    tagline: "I run it all — you just post",
+    price: "$999",
+    period: "/month",
+    periodNote: "+ $99 one-time setup fee",
+    bestFor: "social media managers & small businesses",
+    features: [
+      "I host & run n8n for you",
+      "All platforms connected & maintained",
+      "AI writes captions — edit before posting",
+      "I handle updates, fixes & API renewals",
+      "Priority support via chat",
+      "Cancel anytime",
+    ],
+    cta: "Book a call",
+    maintenanceNote:
+      "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
+    highlighted: false,
+  },
+  {
     planKey: "starter",
     name: "Setup & Go",
     subtitle: "Starter",
@@ -25,48 +47,26 @@ const plans = [
     cta: "Book a call",
     maintenanceNote:
       "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
-    highlighted: false,
-  },
-  {
-    planKey: "managed",
-    name: "Done for You",
-    subtitle: "Managed",
-    tagline: "I run it all — you just post",
-    price: "$599",
-    period: "/month",
-    periodNote: "+ $99 one-time setup fee",
-    bestFor: "social media managers & small businesses",
-    features: [
-      "I host & run n8n for you",
-      "All platforms connected & maintained",
-      "AI writes captions — edit before posting",
-      "I handle updates, fixes & API renewals",
-      "Priority support via chat",
-      "Cancel anytime",
-    ],
-    cta: "Book a call",
-    maintenanceNote:
-      "Additional maintenance fee applies (API token renewal, node fixes, minor tweaks).",
     highlighted: true,
   },
   {
-    planKey: "agency",
-    name: "Growth & Scale",
-    subtitle: "Agency",
-    tagline: "Full power, multiple brands",
-    price: "$1,499",
-    period: "/month",
-    periodNote: "+ $99 one-time setup fee",
-    bestFor: "agencies managing multiple clients",
+    planKey: "custom",
+    name: "Custom Workflow",
+    subtitle: "Enterprise",
+    tagline: "Tailored n8n automation for your scope",
+    price: "Custom",
+    period: "",
+    periodNote: "Pricing based on your workflow scope",
+    bestFor: "businesses needing custom n8n automation",
     features: [
-      "Everything in Done for You",
-      "Multiple brand/client accounts",
-      "Faster processing & better AI outputs",
-      "Expanded platform support",
-      "Early access to new features",
-      "Dedicated support & monthly check-in",
+      "Custom n8n workflow design & build",
+      "Scoped to your exact business process",
+      "Multi-platform & third-party integrations",
+      "Dedicated workflow consultation",
+      "Ongoing support & iterations",
+      "Fully tailored to your team's needs",
     ],
-    cta: "Book a call",
+    cta: "Let's talk",
     maintenanceNote: "",
     highlighted: false,
   },
@@ -77,6 +77,10 @@ export default function Pricing() {
   const { user } = useAuth();
 
   const handlePlanCTA = (planKey: string) => {
+    if (planKey === "custom") {
+      router.push("/pages/onboarding?plan=custom");
+      return;
+    }
     if (user) {
       router.push(`/pages/onboarding?plan=${planKey}`);
     } else {

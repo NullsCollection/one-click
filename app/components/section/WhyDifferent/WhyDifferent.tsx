@@ -32,27 +32,19 @@ export default function WhyDifferent() {
   return (
     <section
       id="why-different"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#0d1526" }}
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0d1526]"
     >
       {/* Background dot grid */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-40"
         style={{
           backgroundImage:
             "radial-gradient(circle, #2a3a55 1px, transparent 1px)",
           backgroundSize: "28px 28px",
-          opacity: 0.4,
         }}
       />
       {/* Glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(79,70,229,0.18), transparent 70%)",
-        }}
-      />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 pointer-events-none bg-gradient-radial from-primary/18 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -65,7 +57,7 @@ export default function WhyDifferent() {
           <h2 className="font-[family-name:var(--font-spline-sans)] text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
             Built for execution, not complexity.
           </h2>
-          <p className="max-w-2xl mx-auto text-lg font-[family-name:var(--font-poppins)] font-light" style={{ color: "#94a3b8" }}>
+          <p className="max-w-2xl mx-auto text-lg text-slate-400 font-[family-name:var(--font-poppins)] font-light">
             Most tools add complexity. We stripped things down to what creators
             and teams actually use.
           </p>
@@ -75,27 +67,16 @@ export default function WhyDifferent() {
           {differentiators.map((item) => (
             <article
               key={item.title}
-              className="flex items-start gap-5 rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-0.5"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.04)",
-                borderColor: "rgba(255,255,255,0.08)",
-              }}
+              className="flex items-start gap-5 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.06] hover:border-white/[0.12] cursor-default"
             >
-              <div
-                className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
-                style={{
-                  backgroundColor: "rgba(79,70,229,0.2)",
-                  border: "1px solid rgba(79,70,229,0.3)",
-                  color: "#818cf8",
-                }}
-              >
+              <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center bg-primary/20 border border-primary/30 text-indigo-400">
                 <item.Icon className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="font-[family-name:var(--font-spline-sans)] text-lg font-bold text-white mb-1.5">
                   {item.title}
                 </h3>
-                <p className="text-sm font-[family-name:var(--font-poppins)] leading-relaxed" style={{ color: "#94a3b8" }}>
+                <p className="text-sm text-slate-400 font-[family-name:var(--font-poppins)] leading-relaxed">
                   {item.description}
                 </p>
               </div>

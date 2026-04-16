@@ -98,13 +98,13 @@ export default function HowItWorks() {
                     MODE
                   </div>
                   <div className="flex gap-1 bg-gray-50 border border-gray-200 rounded-lg p-1 mb-4">
-                    <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all">
+                    <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all cursor-pointer hover:text-secondary">
                       Manual
                     </button>
-                    <button className="flex-1 py-1.5 text-xs font-medium text-primary bg-white rounded-md shadow-sm transition-all">
+                    <button className="flex-1 py-1.5 text-xs font-medium text-primary bg-white rounded-md shadow-sm transition-all cursor-pointer">
                       AI Mode
                     </button>
-                    <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all">
+                    <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all cursor-pointer hover:text-secondary">
                       Hybrid
                     </button>
                   </div>

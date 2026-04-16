@@ -1,69 +1,71 @@
-import {
-  Smartphone,
-  Briefcase,
-  Camera,
-  MessageCircle,
-  Bot,
-  Zap,
-  Lock,
-  Users,
-} from "lucide-react";
+import { Zap, Lock, Users } from "lucide-react";
+
+interface IconProps { className?: string }
+
+// Social platform SVG icons (Simple Icons paths)
+const FacebookIcon = ({ className }: IconProps) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+  </svg>
+);
+
+const LinkedInIcon = ({ className }: IconProps) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
+
+const InstagramIcon = ({ className }: IconProps) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+  </svg>
+);
+
+const XIcon = ({ className }: IconProps) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+  </svg>
+);
+
+const SparklesIcon = ({ className }: IconProps) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  </svg>
+);
+
+const proofItems = [
+  { Icon: FacebookIcon, label: "Facebook", text: "integration" },
+  { Icon: LinkedInIcon, label: "LinkedIn", text: "integration" },
+  { Icon: InstagramIcon, label: "Instagram", text: "integration" },
+  { Icon: XIcon, label: "X / Twitter", text: "integration" },
+  { Icon: SparklesIcon, label: "AI captions", text: null },
+  { Icon: Zap, label: "Posts in under 3 seconds", text: null },
+  { Icon: Lock, label: "Secure", text: "by design" },
+  { Icon: Users, label: "500+ creators", text: null },
+];
+
+const Divider = () => (
+  <span className="flex-shrink-0 w-1 h-1 rounded-full bg-gray-300" aria-hidden="true" />
+);
 
 export default function ProofBar() {
-  const proofItems = [
-    { Icon: Smartphone, text: "Facebook", highlight: true },
-    { Icon: Briefcase, text: "LinkedIn", highlight: true },
-    { Icon: Camera, text: "Instagram", highlight: true },
-    { Icon: MessageCircle, text: "X / Twitter", highlight: true },
-    { Icon: Bot, text: "AI captions", highlight: true },
-    { Icon: Zap, text: "Posts in under 3 seconds", highlight: false },
-    { Icon: Lock, text: "Secure", highlight: true },
-    { Icon: Users, text: "500+ creators", highlight: false },
-  ];
-
   return (
     <div className="border-t border-b border-gray-200 bg-white overflow-hidden py-5">
       <div className="relative flex">
-        <div className="flex items-center gap-12 animate-marquee">
-          {/* First set */}
-          {proofItems.map((item, index) => (
+        <div className="flex items-center gap-10 animate-marquee">
+          {[...proofItems, ...proofItems].map((item, index) => (
             <div
-              key={`first-${index}`}
+              key={index}
               className="flex items-center gap-2.5 text-sm font-medium text-text font-[family-name:var(--font-poppins)] flex-shrink-0"
             >
               <item.Icon className="w-4 h-4 text-primary" />
-              {item.highlight ? (
-                <>
-                  <strong className="font-semibold text-secondary">
-                    {item.text}
-                  </strong>{" "}
-                  integration
-                </>
-              ) : (
-                <span>{item.text}</span>
+              <strong className="font-semibold text-secondary">
+                {item.label}
+              </strong>
+              {item.text && (
+                <span className="text-text font-normal">{item.text}</span>
               )}
-            </div>
-          ))}
-
-          {/* Duplicate set for seamless loop */}
-          {proofItems.map((item, index) => (
-            <div
-              key={`second-${index}`}
-              className="flex items-center gap-12 text-sm font-medium text-text font-[family-name:var(--font-poppins)] flex-shrink-0"
-            >
-              <div className="flex items-center gap-2.5">
-                <item.Icon className="w-4 h-4 text-primary" />
-                {item.highlight ? (
-                  <>
-                    <strong className="font-semibold text-secondary">
-                      {item.text}
-                    </strong>{" "}
-                    integration
-                  </>
-                ) : (
-                  <span>{item.text}</span>
-                )}
-              </div>
+              {index < proofItems.length * 2 - 1 && <Divider />}
             </div>
           ))}
         </div>

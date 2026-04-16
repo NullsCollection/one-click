@@ -52,7 +52,7 @@ export default function Problem() {
           {painPoints.map((point, index) => (
             <div
               key={index}
-              className="relative p-7 rounded-2xl border border-gray-200 bg-white hover:border-primary/30 hover:shadow-lg transition-all duration-300 group overflow-hidden"
+              className="relative p-7 rounded-2xl border border-gray-200 bg-white hover:border-primary/30 hover:shadow-lg transition-all duration-300 group overflow-hidden cursor-default"
             >
               {/* Large watermark number */}
               <div className="absolute top-2 right-4 font-[family-name:var(--font-spline-sans)] text-8xl font-bold text-gray-100 leading-none select-none pointer-events-none">

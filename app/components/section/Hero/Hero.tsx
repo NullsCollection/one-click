@@ -191,8 +191,10 @@ export default function Hero() {
 
             {/* Floating Notification */}
             <div className="absolute -bottom-5 -right-5 z-20 bg-white rounded-xl p-3 shadow-[0_4px_24px_rgba(0,0,0,0.10)] border border-gray-100 flex items-center gap-3 animate-float-delayed">
-              <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-base flex-shrink-0">
-                ✅
+              <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
               </div>
               <div>
                 <div className="text-xs font-semibold text-secondary">

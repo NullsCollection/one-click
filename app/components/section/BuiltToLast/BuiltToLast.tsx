@@ -51,7 +51,7 @@ export default function BuiltToLast() {
           {trustItems.map((item) => (
             <article
               key={item.title}
-              className="group p-7 rounded-2xl border border-gray-200 bg-white hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+              className="group p-7 rounded-2xl border border-gray-200 bg-white hover:border-primary/30 hover:shadow-lg transition-all duration-300 cursor-default"
             >
               <item.Icon className="w-9 h-9 text-primary mb-5 transition-transform duration-300 group-hover:scale-110" />
               <h3 className="font-[family-name:var(--font-spline-sans)] text-base font-bold text-secondary mb-2">
