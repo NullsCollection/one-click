@@ -31,8 +31,8 @@ export default function RootLayout({
       className={`${poppins.variable} ${splineSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-          <AuthProvider>{children}</AuthProvider>
-        </body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, type MouseEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, LogOut, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui";
@@ -19,6 +19,7 @@ function getInitials(name: string) {
 export default function Navbar() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -35,7 +36,12 @@ export default function Navbar() {
     id: string,
   ) => {
     event.preventDefault();
-    scrollToSection(id);
+    if (pathname === "/") {
+      scrollToSection(id);
+    } else {
+      router.push(`/#${id}`);
+      if (isMenuOpen) setIsMenuOpen(false);
+    }
   };
 
   // Close dropdown when clicking outside

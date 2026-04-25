@@ -30,8 +30,14 @@ export default function Problem() {
   ];
 
   return (
-    <section id="problem" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="problem"
+      className="relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8 bg-white dotted-grid"
+    >
+      {/* Gradient fade edges */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white via-transparent to-white" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white via-transparent to-white" />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="mb-16 text-center">
           <StatusPill
             className="mb-3 uppercase tracking-wider flex w-fit mx-auto"
@@ -48,7 +54,7 @@ export default function Problem() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {painPoints.map((point, index) => (
             <div
               key={index}

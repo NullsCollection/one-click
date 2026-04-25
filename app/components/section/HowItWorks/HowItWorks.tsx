@@ -29,8 +29,15 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="how-it-works"
+      className="py-24 px-4 relative overflow-hidden sm:px-6 lg:px-8 bg-white dotted-grid"
+    >
+      {/* Gradient fade edges */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white via-transparent to-white" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white via-transparent to-white" />
+
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <StatusPill
             className="mb-3 uppercase tracking-wider flex w-fit mx-auto"
@@ -51,7 +58,7 @@ export default function HowItWorks() {
           {steps.map((step) => (
             <article
               key={step.number}
-              className="relative rounded-2xl border border-gray-200 p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="relative rounded-2xl bg-white border border-gray-200 p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg "
             >
               <div className="mb-5 flex items-center justify-between">
                 <div className="w-12 h-12 rounded-full bg-primary text-white font-[family-name:var(--font-spline-sans)] text-[15px] font-bold flex items-center justify-center shadow-[0_2px_6px_rgba(79,70,229,0.22),inset_0_-2px_0_rgba(0,0,0,0.18)]">
@@ -105,7 +112,7 @@ export default function HowItWorks() {
                       AI Mode
                     </button>
                     <button className="flex-1 py-1.5 text-xs font-medium text-text rounded-md transition-all cursor-pointer hover:text-secondary">
-                      Hybrid
+                      Video
                     </button>
                   </div>
 
@@ -139,6 +146,12 @@ export default function HowItWorks() {
                     </span>
                     <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border border-primary bg-primary/10 text-primary">
                       LinkedIn
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border border-primary bg-primary/10 text-primary">
+                      Instagram
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border border-primary bg-primary/10 text-primary">
+                      Twitter
                     </span>
                   </div>
 

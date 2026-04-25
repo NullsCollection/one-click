@@ -28,12 +28,16 @@ This is a marketing landing page SaaS app. `app/page.tsx` composes 12 section co
 **Key directories:**
 - `app/components/section/` — one folder per landing page section, each self-contained
 - `app/components/ui/` — shared primitives (`Button`, `StatusPill`)
-- `app/pages/` — additional routes (`login`, `signup`, `onboarding`, `verify-email`, legal pages) at `/pages/...` URLs
+- `app/pages/` — additional routes (`login`, `signup`, `onboarding`, `verify-email`, `workflows`, legal pages) at `/pages/...` URLs
+- `app/pages/workflows/` — workflow case-study showcase: `page.tsx` lists cards, `WorkflowCard.tsx` is the grid tile, `WorkflowModal.tsx` is the case-study detail modal. The page calls `listWorkflows()` and falls back to `mockWorkflows` on `ApiError`, so it renders before the backend exists.
 - `app/api/` — Next.js Route Handlers; currently `schedule-webhook` proxies Cal.com booking data to `N8N_WEBHOOK_URL`
 - `lib/api.ts` — `request<T>()` base fetcher (sends `credentials: "include"` for httpOnly JWT cookies, throws `ApiError`)
 - `lib/auth.ts` — typed auth API calls (`login`, `signup`, `logout`, `getMe`, `verifyEmail`, etc.)
+- `lib/workflows.ts` — typed workflow CRUD client (`listWorkflows`, `getWorkflow`, `createWorkflow`, `updateWorkflow`, `deleteWorkflow`) + `Workflow` types + `mockWorkflows` seed data. Backend contract: `GET /api/workflows` returns `Workflow[]`.
 - `lib/utils.ts` — exports `cn()` (clsx + tailwind-merge); use this for all className composition
 - `app/context/AuthContext.tsx` — `AuthProvider` + `useAuth()` hook; wraps the whole app in `layout.tsx`
+
+**Navbar anchors are path-aware**: `Navbar.tsx` reads `usePathname()`. On `/` it smooth-scrolls to the section; on any other route it routes to `/#<id>` so anchor links keep working from inner pages.
 
 ## Auth Flow
 
@@ -51,7 +55,7 @@ Copy `.env.example` to `.env.local`:
 CSS custom properties defined in `app/globals.css`:
 - `--primary: #4f46e5` (indigo)
 - `--secondary: #1f2b48` (dark blue)
-- `--text-color: #828fa1`
+- `--text-color: #556579`
 - Fonts: Poppins (UI), Spline Sans (headings)
 
 Custom animations: `animate-float`, `animate-float-delayed`, `animate-marquee`.

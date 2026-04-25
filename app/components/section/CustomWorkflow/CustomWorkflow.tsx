@@ -31,11 +31,7 @@ export default function CustomWorkflow() {
   const { user } = useAuth();
 
   const handleCTA = () => {
-    if (user) {
-      router.push("/pages/onboarding?plan=custom");
-    } else {
-      router.push("/pages/login?redirect=/pages/onboarding?plan=custom");
-    }
+    router.push("/pages/workflows");
   };
 
   return (
@@ -101,9 +97,7 @@ export default function CustomWorkflow() {
             <ArrowRight size={18} />
           </Button>
           <p className="mt-3 text-sm text-text font-[family-name:var(--font-poppins)]">
-            {user
-              ? "Continue to onboarding to tell us about your workflow."
-              : "Sign in to get started — takes less than a minute."}
+            View our Workflow gallery.
           </p>
         </div>
       </div>

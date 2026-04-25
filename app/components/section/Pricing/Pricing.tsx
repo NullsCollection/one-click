@@ -89,8 +89,14 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="pricing"
+      className="relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8 bg-white dotted-grid"
+    >
+      {/* Gradient fade edges */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white via-transparent to-white" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white via-transparent to-white" />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <StatusPill
             className="mb-3 uppercase tracking-wider flex w-fit mx-auto"
